@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,8 +39,15 @@ public class PlayerController : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		if (other.gameObject.CompareTag("Ground")) {
+		if (other.gameObject.CompareTag ("Ground")) {
 			grounded = true;
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.CompareTag ("Respawn")) {
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 	}
 
