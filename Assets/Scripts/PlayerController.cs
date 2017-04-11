@@ -5,7 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 	public float maxSpeed = 5f;
-	bool facingRight = true;
+	public float jumpForce = 10f;
+
+	private bool facingRight = true;
+	private bool grounded = true;
 
 	private Rigidbody2D rb2D;
 
@@ -23,6 +26,20 @@ public class PlayerController : MonoBehaviour
 			Flip ();
 		} else if (move < 0 && facingRight) {
 			Flip ();
+		}
+
+		if (grounded) {
+			if (Input.GetKey (KeyCode.Space)) {
+				grounded = false;
+				rb2D.AddForce (new Vector2 (0, jumpForce), ForceMode2D.Impulse);
+			}
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.CompareTag("Ground")) {
+			grounded = true;
 		}
 	}
 
